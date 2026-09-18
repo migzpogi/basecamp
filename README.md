@@ -24,7 +24,8 @@ $> python webapp.py
 Press CTRL+C to quit
 ```
 
-### Running unit tests
+### Running Tests
+#### Unit Tests
 ```
 $> pytest -q
 ===== test session starts =====
@@ -32,3 +33,20 @@ $> pytest -q
 ...
 ===== n passed in 0.5s =====
 ```
+#### Test Coverage
+```
+$> pytest --cov
+===== test session starts =====
+---------- coverage: platform win32, python 3.8.10-final-0 -----------
+Name                                  Stmts   Miss  Cover
+---------------------------------------------------------
+lib\__init__.py                           0      0   100%
+...
+...
+---------------------------------------------------------
+TOTAL                                    47      1    98%
+```
+#### Generating Reports
+```
+pytest --junitxml=test-results.xml --cov --cov-report xml:test-coverage.xml
+```  
