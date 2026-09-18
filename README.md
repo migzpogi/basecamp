@@ -48,5 +48,5 @@ TOTAL                                    47      1    98%
 ```
 #### Generating Reports
 ```
-pytest --junitxml=test-results.xml --cov=. --cov-report xml:test-coverage.xml
+pytest --junitxml=test-results.xml --cov=. --cov-report xml:test-coverage.xml --cov-config=.coveragerc
 ```  
