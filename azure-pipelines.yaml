@@ -1,0 +1,12 @@
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+  - stage: Build
+    displayName: Build
+    jobs:
+      - job: BuildJob
+        displayName: Sample build job
+        steps:
+          - script: |
+              pwd
