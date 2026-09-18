@@ -18,6 +18,15 @@ def stub_2():
     """
     return 2
 
+def stub_3(n):
+    """
+    This is a stub function to simulate branch coverage
+    """
+    if n == 1:
+        return 1
+    else:
+        return 0
+
 
 if __name__ == '__main__':
     app.run(host=webapp_properties['host'], port=webapp_properties['port'])
