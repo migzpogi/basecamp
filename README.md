@@ -26,7 +26,7 @@ Press CTRL+C to quit
 
 ### Running unit tests
 ```
-$> pytest
+$> pytest -q
 ===== test session starts =====
 ...
 ...
