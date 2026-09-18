@@ -35,7 +35,7 @@ $> pytest -q
 ```
 #### Test Coverage
 ```
-$> pytest --cov
+$> pytest --cov=. --cov-report=term-missing --cov-config=.coveragerc
 ===== test session starts =====
 ---------- coverage: platform win32, python 3.8.10-final-0 -----------
 Name                                  Stmts   Miss  Cover
@@ -48,5 +48,5 @@ TOTAL                                    47      1    98%
 ```
 #### Generating Reports
 ```
-pytest --junitxml=test-results.xml --cov --cov-report xml:test-coverage.xml
+pytest --junitxml=test-results.xml --cov=. --cov-report xml:test-coverage.xml
 ```  

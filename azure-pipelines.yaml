@@ -15,7 +15,7 @@ stages:
             displayName: Install Python requirements
 
           - script: |
-              pytest --junitxml=test-results.xml --cov --cov-report xml:test-coverage.xml
+              pytest --junitxml=test-results.xml --cov=. --cov-report xml:test-coverage.xml --cov-config=.coveragerc
             displayName: Run pytest for unit test and coverage
 
           - task: PublishTestResults@2
