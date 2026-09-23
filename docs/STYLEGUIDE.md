@@ -19,6 +19,24 @@ def complex(real=0.0, imag=0.0):
     ...
 ```
 
+Or
+```
+def complex(real=0.0, imag=0.0):
+    """
+    Form a complex number.
+
+    :param real: the real part (default 0.0)
+    :type real: float
+    :param imag: the imaginary part (default 0.0)
+    :type imag: float
+    :return: complex number
+    :rtype: float
+
+    if imag == 0.0 and real == 0.0:
+        return complex_zero
+    ...
+```
+
 ### Package and Module Names
 [PEP 8 - Package and Module Names](https://peps.python.org/pep-0008/#package-and-module-names)  
 Modules should have short, all-lowercase names. Underscores can be used in the module name if it improves readability. Python packages should also have short, all-lowercase names, although the use of underscores is discouraged.
