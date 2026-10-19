@@ -1,7 +1,7 @@
 import unittest
 import sys
 
-from aoc2025.day5.day5 import foo, read_lines, process_ingredient_database, run_sample
+from aoc2025.day5.day5 import foo, read_lines, process_ingredient_database, run, is_range_overlap
 
 class AocTests(unittest.TestCase):
 
@@ -64,12 +64,40 @@ class AocTests(unittest.TestCase):
         self.assertEqual(len(fresh_ids), range_count)
         self.assertEqual(len(avail_ids), int_count)
 
-    def test_day5_run_sample(self):
+    def test_day5_run(self):
         """
         Test is passed if result is 3
         """
-        result = run_sample('./tests/aoc2025/day5sample.txt')
+        result = run('./tests/aoc2025/day5sample.txt')
         self.assertEqual(result, 3)
+
+    def test_day5_is_rng_overlap_false(self):
+        """
+        Test is passed if is_range_overlap returns false
+        """
+        rng_a = range(10,15) # actual range is 10-14
+        rng_b = range(16,21) # actual range is 16-20
+
+        self.assertEqual(is_range_overlap(rng_a, rng_b), False)
+
+    def test_day5_is_rng_overlap_true(self):
+        """
+        Test is passed if is_range_overlap returns true
+        """
+        rng_a = range(10,15) # actual range is 10-14
+        rng_b = range(12,19) # actual range is 12-19
+
+        self.assertEqual(is_range_overlap(rng_a, rng_b), True)
+
+    def test_day5_is_rng_overlap_true_2(self):
+        """
+        Test is passed if is_range_overlap returns true
+        Same end and start number
+        """
+        rng_a = range(10,15) # actual range is 10-14
+        rng_b = range(14,19) # actual range is 14-19
+
+        self.assertEqual(is_range_overlap(rng_a, rng_b), True)
 
 
 if __name__ == '__main__':

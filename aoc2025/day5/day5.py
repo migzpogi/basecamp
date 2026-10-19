@@ -49,7 +49,13 @@ def process_ingredient_database(database):
 
     return (fresh_ids, avail_ids)
 
-def run_sample(file_path):
+def is_range_overlap(rng_a, rng_b):
+    if rng_b[0] <= rng_a[-1]:
+        return True
+    else:
+        return False
+
+def run(file_path):
     database = read_lines(file_path)
     fresh_ids, avail_ids = process_ingredient_database(database)
     fresh_count = 0
@@ -65,4 +71,4 @@ def run_sample(file_path):
 
 
 if __name__ == '__main__':
-    print(run_sample('aoc2025/day5/first.txt'))
+    print(run('aoc2025/day5/first.txt'))
