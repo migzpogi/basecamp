@@ -49,11 +49,48 @@ def process_ingredient_database(database):
 
     return (fresh_ids, avail_ids)
 
-def is_range_overlap(rng_a, rng_b):
-    if rng_b[0] <= rng_a[-1]:
+def is_range_overlap(rng_start, rng_stop):
+    """
+    Determines if the two given ranges overlap with each other.
+    The order of ranges matter.
+
+    range(10,15) and range(12,19) == True
+    range(12,19) and range(10,15) == False
+
+    :param rng_start: Range with the smaller start
+    :type database: range
+    :param rng_stop: Range with the higher stop
+    :type database: range
+    :return: True/False
+    :rtype: boolean
+    """
+    if rng_stop[0] <= rng_start[-1]:
         return True
     else:
         return False
+
+def extend_range(rng_start, rng_stop):
+    """
+    Extends/retains the range if they overlap
+    The order of ranges matter.
+
+    range(10,15) and range(12,19) -> range(10,19)
+    range(10,18) and range(12,15) -> range(10,18)
+
+    :param rng_start: Range with the smaller start
+    :type database: range
+    :param rng_stop: Range with the higher stop
+    :type database: range
+    :return: Extended or retained range
+    :rtype: range
+    """
+    if is_range_overlap(rng_start, rng_stop):
+        if rng_stop[-1] <= rng_start[-1]:
+            return(range(rng_start[0], rng_start[-1]+1))
+        else:
+            return(range(rng_start[0], rng_stop[-1]+1))
+    else:
+        raise ValueError("Given ranges do not overlap.")
 
 def run(file_path):
     database = read_lines(file_path)
@@ -72,3 +109,6 @@ def run(file_path):
 
 if __name__ == '__main__':
     print(run('aoc2025/day5/first.txt'))
+    # rng_b = range(10,15) # actual range is 10-14
+    # rng_a = range(1,5)   # actual range is 1-4
+    # print(extend_range(rng_a, rng_b))

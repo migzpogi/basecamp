@@ -1,7 +1,7 @@
 import unittest
 import sys
 
-from aoc2025.day5.day5 import foo, read_lines, process_ingredient_database, run, is_range_overlap
+from aoc2025.day5.day5 import foo, read_lines, process_ingredient_database, run, is_range_overlap, extend_range
 
 class AocTests(unittest.TestCase):
 
@@ -98,6 +98,35 @@ class AocTests(unittest.TestCase):
         rng_b = range(14,19) # actual range is 14-19
 
         self.assertEqual(is_range_overlap(rng_a, rng_b), True)
+
+    def test_day5_extend_range(self):
+        """
+        Test is passed if new range is extended
+        """
+        rng_a = range(10,15) # actual range is 10-14
+        rng_b = range(12,19) # actual range is 12-19
+
+        self.assertEqual(extend_range(rng_a, rng_b), range(10,19))
+
+    def test_day5_extend_range_2(self):
+        """
+        Test is passed if new range is retained
+        """
+        rng_a = range(10,19) # actual range is 10-18
+        rng_b = range(12,15) # actual range is 12-14
+
+        self.assertEqual(extend_range(rng_a, rng_b), range(10,19))
+
+    def test_day5_extend_range_error(self):
+        """
+        Test is passed if ValueError is raised
+        """
+        rng_a = range(1,5)   # actual range is 1-4
+        rng_b = range(10,15) # actual range is 10-14
+
+
+        with self.assertRaises(ValueError) as e:
+            extend_range(rng_a, rng_b), range(10,19)
 
 
 if __name__ == '__main__':
