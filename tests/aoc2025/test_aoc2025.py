@@ -1,7 +1,7 @@
 import unittest
 import sys
 
-from aoc2025.day5.day5 import foo, read_lines, process_ingredient_database, run, is_range_overlap, extend_range
+from aoc2025.day5.day5 import foo, read_lines, process_ingredient_database, run, is_range_overlap, extend_range, run_2
 
 class AocTests(unittest.TestCase):
 
@@ -127,6 +127,13 @@ class AocTests(unittest.TestCase):
 
         with self.assertRaises(ValueError) as e:
             extend_range(rng_a, rng_b), range(10,19)
+
+    def test_day5_run_2(self):
+        """
+        Test is passed if result is 14
+        """
+        result = run_2('./tests/aoc2025/day5sample.txt')
+        self.assertEqual(result, 14)
 
 
 if __name__ == '__main__':
