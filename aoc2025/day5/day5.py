@@ -27,8 +27,8 @@ def process_ingredient_database(database):
 
     :param database: List of ingredient ids from the input file
     :type database: [str]
-    :return: A list of fresh ingredient ranges, and a list of available ingredients
-    :rtype: tuple
+    :return: A list of fresh ingredient ranges, and a list of available ingredients ranges
+    :rtype: tuple (range(), range())
     """
 
     fresh_ids = []
@@ -82,7 +82,7 @@ def extend_range(rng_start, rng_stop):
     :param rng_stop: Range with the higher stop
     :type database: range
     :return: Extended or retained range
-    :rtype: range
+    :rtype: range()
     """
     if is_range_overlap(rng_start, rng_stop):
         if rng_stop[-1] <= rng_start[-1]:
@@ -106,9 +106,17 @@ def run(file_path):
         
     return fresh_count
 
+def run_2(file_path):
+    database = read_lines(file_path)
+    fresh_ids, avail_ids = process_ingredient_database(database)
+    fresh_ids.sort(key=lambda x: x[0])
+
+    return fresh_ids
 
 if __name__ == '__main__':
-    print(run('aoc2025/day5/first.txt'))
+    # print(run('aoc2025/day5/first.txt'))
     # rng_b = range(10,15) # actual range is 10-14
     # rng_a = range(1,5)   # actual range is 1-4
     # print(extend_range(rng_a, rng_b))
+
+    print(run_2('aoc2025/day5/sample.txt'))
