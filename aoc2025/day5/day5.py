@@ -107,16 +107,46 @@ def run(file_path):
     return fresh_count
 
 def run_2(file_path):
+    """
+    Given a list of fresh ids   -> [range(3,5), range(10,14), range(16,20), range(12,18)]
+    Sort it in descending order -> [range(16,20), range(12,18), range(10,14), range(3,5)]
+    Pop the elements and evaluate merge/retain logic.
+
+    [(16,20), (12,18), (10,14)]     [(3,5)]
+    [(16,20), (12,18)]              [(3,5), (10,14)]
+    [(16,20)]                       [(3,5), (10,18)]
+    []                              [(3,5), (10,20)]
+
+    Count elements in new list -> 14
+    """
     database = read_lines(file_path)
     fresh_ids, avail_ids = process_ingredient_database(database)
-    fresh_ids.sort(key=lambda x: x[0])
+    fresh_ids.sort(key=lambda x: x[0], reverse=True)
 
-    return fresh_ids
+    combined_ranges = [range(0,0)]
+    unique_ids = 0
+
+    while fresh_ids:
+        p = fresh_ids.pop()
+        q = combined_ranges.pop()
+    
+        if q == range(0,0):
+            combined_ranges.append(q)
+            combined_ranges.append(p)
+            continue
+
+        if is_range_overlap(q, p):
+            combined_ranges.append(extend_range(q,p))
+        else:
+            combined_ranges.append(q)
+            combined_ranges.append(p)
+
+    for i in combined_ranges:
+        unique_ids += len(i)
+
+
+    return unique_ids
 
 if __name__ == '__main__':
     # print(run('aoc2025/day5/first.txt'))
-    # rng_b = range(10,15) # actual range is 10-14
-    # rng_a = range(1,5)   # actual range is 1-4
-    # print(extend_range(rng_a, rng_b))
-
-    print(run_2('aoc2025/day5/sample.txt'))
+    print(run_2('aoc2025/day5/first.txt'))
