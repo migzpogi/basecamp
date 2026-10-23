@@ -46,6 +46,8 @@ stages:
               scannerMode: 'cli'
               configMode: 'manual'
               cliProjectKey: 'migzzgim_basecamp'
+          - task: SonarCloudAnalyze@4
+            displayName: Analyze code
   - stage: Build
     displayName: Build
     dependsOn: Sonarqube
