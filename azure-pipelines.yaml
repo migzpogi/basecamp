@@ -31,8 +31,24 @@ stages:
             inputs:
               summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/test-coverage.xml'
             displayName: 'Publish Code Coverage'
+  - stage: Sonarqube
+    displayName: SonarQube Scan
+    dependsOn: Test
+    jobs:
+      - job: Run_Scan
+        displayName: Run SonarQube scan
+        steps:
+          - task: SonarCloudPrepare@4
+            displayName: Prepare SonarQube Cloud connection
+            inputs:
+              SonarCloud: 'sq-azdo-svc'
+              organization: 'migzzgim'
+              scannerMode: 'cli'
+              configMode: 'manual'
+              cliProjectKey: 'migzzgim_basecamp'
   - stage: Build
     displayName: Build
+    dependsOn: Sonarqube
     jobs:
       - job: BuildJob
         displayName: Sample build job
