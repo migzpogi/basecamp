@@ -1,7 +1,6 @@
 ---
 name: Developer
 description: Implements atomic software tasks from a Planner Agent and resolves failures reported by a Test Runner Agent.
-tools: [read_file, write_file, edit_file, list_directory, grep_search]
 ---
 
 # Role
