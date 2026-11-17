@@ -1,4 +1,5 @@
 import re
+from typing import List, Tuple
 
 class HomeWork:
     def __init__(self):
@@ -61,6 +62,10 @@ def read_lines(file_path, encoding='utf-8'):
     with open(file_path, 'r', encoding=encoding) as file:
         return [line.strip() for line in file]
 
+def read_raw_lines(file_path, encoding='utf-8'):
+    with open(file_path, 'r', encoding=encoding) as file:
+        return [line.rstrip('\r\n') for line in file]
+
 def prepare_problem_input(line):
     """
     Removes the white spaces in between elements of the problem input.
@@ -89,7 +94,72 @@ def run_1(input_file):
 
     return h.compute_homework()
 
+def parse_part_2_problems(lines: List[str]) -> List[Tuple[str, List[int]]]:
+    if len(lines) < 2:
+        raise ValueError("Worksheet must contain at least one number row and an operator row")
+
+    width = max(len(line) for line in lines)
+    rows = [line.ljust(width) for line in lines]
+    digit_rows = rows[:-1]
+    operator_row = rows[-1]
+    problems = []
+    span_start = None
+
+    for column in range(width + 1):
+        has_content = column < width and any(
+            not row[column].isspace() for row in rows
+        )
+
+        if has_content and span_start is None:
+            span_start = column
+        elif not has_content and span_start is not None:
+            span_end = column
+            operators = [
+                operator_row[index]
+                for index in range(span_start, span_end)
+                if not operator_row[index].isspace()
+            ]
+            if len(operators) != 1 or operators[0] not in ('+', '*'):
+                raise ValueError("Each problem span must contain exactly one '+' or '*' operator")
+
+            numbers = []
+            for index in range(span_end - 1, span_start - 1, -1):
+                digits = []
+                for row in digit_rows:
+                    character = row[index]
+                    if character.isdigit():
+                        digits.append(character)
+                    elif not character.isspace():
+                        raise ValueError("Number rows may contain only digits and whitespace")
+                if digits:
+                    numbers.append(int(''.join(digits)))
+
+            if not numbers:
+                raise ValueError("Each problem span must contain at least one number")
+            problems.append((operators[0], numbers))
+            span_start = None
+
+    if not problems:
+        raise ValueError("Worksheet does not contain any problem spans")
+    return problems
+
+def run_2(input_file):
+    problems = parse_part_2_problems(read_raw_lines(input_file))
+    total = 0
+
+    for operator, numbers in problems:
+        answer = numbers[0]
+        for number in numbers[1:]:
+            if operator == '*':
+                answer *= number
+            else:
+                answer += number
+        total += answer
+
+    return total
+
 
 
 if __name__ == '__main__':
     print(run_1("input.txt"))
+    print(run_2("input.txt"))
